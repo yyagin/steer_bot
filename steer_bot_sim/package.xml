@@ -1,22 +1,27 @@
 <?xml version="1.0"?>
 <package format="2">
-    <name>steer_bot_control</name>
+    <name>steer_bot_sim</name>
     <version>0.0.0</version>
-    <description>The steer_bot_control package</description>
+    <description>The steer_bot_sim package</description>
     <maintainer email="rhys.mainwaring@me.com">Rhys Mainwaring</maintainer>
     <license>BSD-3-Clause</license>
     <url type="website">https://github.com/srmainwaring/steer_bot</url>
     <url type="repository">https://github.com/srmainwaring/steer_bot</url>
     <url type="bugtracker">https://github.com/srmainwaring/steer_bot/issues</url>
     <author email="rhys.mainwaring@me.com">Rhys Mainwaring</author>
+
     <buildtool_depend>catkin</buildtool_depend>
-    <depend>roslaunch</depend>
     <depend>ackermann_steering_controller</depend>
     <depend>controller_manager</depend>
+    <depend>gazebo_ros</depend>
+    <depend>gazebo_ros_control</depend>
     <depend>joint_state_controller</depend>
     <depend>robot_state_publisher</depend>
+    <depend>roslaunch</depend>
+    <depend>rqt_robot_steering</depend>
+    <depend>steer_bot_control</depend>
     <depend>steer_bot_description</depend>
+    <depend>steer_bot_hardware_gazebo</depend>
     <depend>steer_drive_controller</depend>
-    <depend>twist_mux</depend>
-
+    <depend>xacro</depend>
 </package>

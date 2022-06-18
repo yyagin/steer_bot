@@ -1,0 +1,16 @@
+topics:
+# Waypoints navigation control
+- name    : nav_cmd_vel
+  topic   : /cmd_vel
+  timeout : 0.5
+  priority: 1
+- name    : keyboard
+  topic   : /cmd_vel_manual
+  timeout : 0.5
+  priority: 2
+locks:
+# Manual stop command
+- name    : e_stop
+  topic   : e_stop
+  timeout : 0.0
+  priority: 255

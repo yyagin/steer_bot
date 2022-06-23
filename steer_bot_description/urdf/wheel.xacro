@@ -13,7 +13,7 @@
   <xacro:include filename="$(find steer_bot_description)/urdf/inertials.xacro"/>
 
   <!-- Properties -->
-  <xacro:property name="steer_effort" value="10.0"/>
+  <xacro:property name="steer_effort" value="100.0"/>
   <xacro:property name="steer_velocity" value="5.0"/>
   <xacro:property name="steer_limit_deg" value="45.0"/>
 
@@ -62,7 +62,7 @@
     <transmission name="${name}_steer_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="${name}_steer_joint_motor">
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>20</mechanicalReduction>
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </actuator>
       <joint name="${name}_steer_joint">
@@ -151,7 +151,7 @@
     <transmission name="${name}_steer_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="${name}_steer_joint_motor">
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>20</mechanicalReduction>
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </actuator>
       <joint name="${name}_steer_joint">
@@ -231,51 +231,51 @@
     </gazebo>
   </xacro:macro>
 
-  <!-- Bicycle model front wheel link (passive - no transmission) -->
-  <xacro:macro name="front_wheel"
-    params="
-      name
-      parent
-      wheel_radius
-      wheel_thickness
-      wheel_mass
-      *origin">
-    <link name="${name}_wheel_link">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
-        </geometry>
-        <material name="yellow" />
-      </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
-        </geometry>
-      </collision>
-      <xacro:solid_cylinder_inertial 
-          rpy="0 0 0" xyz="0 0 0"
-          mass="${wheel_mass}"
-          radius="${wheel_radius}" length="${wheel_thickness}" />
-    </link>
+   <!-- Bicycle model front wheel link (passive - no transmission) -->
+   <xacro:macro name="front_wheel"
+   params="
+     name
+     parent
+     wheel_radius
+     wheel_thickness
+     wheel_mass
+     *origin">
+   <link name="${name}_wheel_link">
+     <visual>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+       </geometry>
+       <material name="yellow" />
+     </visual>
+     <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+       </geometry>
+     </collision>
+     <xacro:solid_cylinder_inertial 
+         rpy="0 0 0" xyz="0 0 0"
+         mass="${wheel_mass}"
+         radius="${wheel_radius}" length="${wheel_thickness}" />
+   </link>
 
-    <joint name="${name}_wheel_joint" type="continuous">
-      <parent link="${parent}_link"/>
-      <child link="${name}_wheel_link"/>
-      <xacro:insert_block name="origin"/>
-      <axis xyz="0 0 1"/>
-    </joint>
+   <joint name="${name}_wheel_joint" type="continuous">
+     <parent link="${parent}_link"/>
+     <child link="${name}_wheel_link"/>
+     <xacro:insert_block name="origin"/>
+     <axis xyz="0 0 1"/>
+   </joint>
 
-    <gazebo reference="${name}_wheel_link">
-      <material>Gazebo/Yellow</material>
-    </gazebo>
+   <gazebo reference="${name}_wheel_link">
+     <material>Gazebo/Yellow</material>
+   </gazebo>
 
-    <gazebo reference="${name}_wheel_joint">
-      <provideFeedback>true</provideFeedback>
-    </gazebo>
-  </xacro:macro>
-
+   <gazebo reference="${name}_wheel_joint">
+     <provideFeedback>true</provideFeedback>
+   </gazebo>
+ </xacro:macro>
+ 
   <!-- Car steering model rear wheel links (left/right) -->
   <xacro:macro name="rear_wheel_lr"
     params="

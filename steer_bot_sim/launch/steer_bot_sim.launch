@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<launch>
+
+
+    <arg name="model" default="" />
+    <arg name="namespace" default="/steer_bot" />
+    <arg name="world_name" default="worlds/empty_world" />
+    <arg name="cmd_timeout" default="0.5" />
+    <arg name="x" default="0.0" />
+    <arg name="y" default="0.0" />
+    <arg name="z" default="1.0" />
+    <arg name="roll" default="0.0" />
+    <arg name="pitch" default="0.0" />
+    <arg name="yaw" default="0.0" />
+
+    <arg name="rvizconfig" default="$(find steer_bot_sim)/rviz/steer_bot_robot.rviz" />
+
+    <group ns="$(arg namespace)">
+
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+
+        <!-- Gazebo  -->
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="gui" default="true" />
+            <arg name="world_name" default="$(arg world_name)" />
+        </include>
+
+        <!-- Description Params Launch -->
+        <include file="$(find steer_bot_description)/launch/description.launch" />
+
+        <!--Controllers Launch  -->
+        <include file="$(find steer_bot_control)/launch/control.launch" />
+
+        <!-- Spawn robot in Gazebo -->
+        <node name="spawn_vehicle" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model steer_bot
+                    -gazebo_namespace /$(arg namespace)/gazebo
+                    -x $(arg x) -y $(arg y) -z $(arg z)
+                    -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)" respawn="false" output="screen" />
+
+        <!-- <node name="fake_localization" pkg="fake_localization" type="fake_localization">
+            <remap from="base_pose_ground_truth" to="odom" />
+        </node> -->
+        <node name="tf_broadcaster" pkg="steer_bot_control" type="tf_broadcaster" >
+            <param name="topic_name" value="/$(arg namespace)/odom"/>
+            </node>
+
+    </group>
+
+</launch>

@@ -37,9 +37,6 @@
                     -x $(arg x) -y $(arg y) -z $(arg z)
                     -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)" respawn="false" output="screen" />
 
-        <!-- <node name="fake_localization" pkg="fake_localization" type="fake_localization">
-            <remap from="base_pose_ground_truth" to="odom" />
-        </node> -->
         <node name="tf_broadcaster" pkg="steer_bot_control" type="tf_broadcaster" >
             <param name="topic_name" value="/$(arg namespace)/odom"/>
             </node>

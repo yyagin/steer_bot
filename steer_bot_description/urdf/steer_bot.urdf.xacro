@@ -87,7 +87,12 @@
       </geometry>
       <material name="green" />
     </visual>
-
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}" />
+      </geometry>
+    </collision>
     <xacro:solid_cuboid_inertial rpy="0 0 0" xyz="0 0 0" mass="${base_mass}" x="${base_length}" y="${base_width}" z="${base_height}" />
   </link>
 

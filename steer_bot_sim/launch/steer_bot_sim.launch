@@ -4,11 +4,11 @@
 
     <arg name="model" default="" />
     <arg name="namespace" default="/steer_bot" />
-    <arg name="world_name" default="worlds/empty_world" />
+    <arg name="world_name" default="$(find steer_bot_sim)/worlds/empty.world" />
     <arg name="cmd_timeout" default="0.5" />
     <arg name="x" default="0.0" />
     <arg name="y" default="0.0" />
-    <arg name="z" default="1.0" />
+    <arg name="z" default="1.5" />
     <arg name="roll" default="0.0" />
     <arg name="pitch" default="0.0" />
     <arg name="yaw" default="0.0" />
@@ -37,9 +37,15 @@
                     -x $(arg x) -y $(arg y) -z $(arg z)
                     -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)" respawn="false" output="screen" />
 
-        <node name="tf_broadcaster" pkg="steer_bot_control" type="tf_broadcaster" >
-            <param name="topic_name" value="/$(arg namespace)/odom"/>
-            </node>
+        <node name="tf_broadcaster" pkg="steer_bot_control" type="tf_broadcaster">
+            <param name="topic_name" value="/$(arg namespace)/odom" />
+        </node>
+
+        <node pkg="rrt_star" type="footprint_publisher_node" name="footprint_publisher_node" output="screen">
+            <param name="wheel_base" value="3.6" />
+            <param name="track_width" value="2.5" />
+            <param name="footprint_padding" value="0.7" />
+        </node>
 
     </group>
 
